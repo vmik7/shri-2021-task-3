@@ -13,3 +13,9 @@
 ### Режим разработки
 
 Добавлен режим разработки `mode: 'development'` в конфигурацию `webpack`. Ошибкой не является, но упрощает процесс отладки.
+
+
+### Опечатка в файле `src/index.ts(46)`
+
+В строке `document.querySelector<HTMLDivElement>('.next').addEventListener('click', () => dispatch(actionPrev()));`
+заменил `actionPrev()` на `actionNext()`.
