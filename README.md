@@ -32,3 +32,19 @@
     }
 }
 ```
+
+### Неправильный индекс слайда в action 'update'
+
+В файле `src/application/data.ts(50)` почему-то указан не индекс текущего слайда, а 0.
+
+Заменил строку
+
+```js
+draft.stories[0].alias = alias;
+```
+
+на
+
+```js
+draft.stories[draft.index].alias = alias;
+```
