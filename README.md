@@ -4,11 +4,13 @@
 
 ## Исправленные ошибки
 
+
 ### Ошибка в файле `src/application/data.ts(46,14)`
 
 Текст: *Type '"update"' is not comparable to type '"message" | "next" | "prev" | "restart" | "theme" | "timer"'.*
 
 Решние: В файле `src/application/actions.ts(46,14)` в тип `Action` добавлено `ReturnType<typeof actionUpdate>`.
+
 
 ### Режим разработки
 
@@ -19,6 +21,7 @@
 
 В строке `document.querySelector<HTMLDivElement>('.next').addEventListener('click', () => dispatch(actionPrev()));`
 заменил `actionPrev()` на `actionNext()`.
+
 
 ### Скрытая кнопка предыдущего слайда
 
@@ -32,6 +35,7 @@
     }
 }
 ```
+
 
 ### Неправильный индекс слайда в action 'update'
 
@@ -49,6 +53,7 @@ draft.stories[0].alias = alias;
 draft.stories[draft.index].alias = alias;
 ```
 
+
 ### Переключатель тем
 
 В файле `src/application/views.ts` описана функция `setElementTheme`, которая судя по всему должна менять класс темы. Однако она просто навешивает новый класс поверх старого. Вследствие этого тема меняется, однако кнопки переключения темы взаимодействуют между собой неправильно. Чтобы это пофиксить, необходимо сначала удалить старый класс темы, а только после этого добавить новый.
@@ -64,3 +69,18 @@ elem.classList.remove('theme_dark');
 ### Не переключаются слайды
 
 В файле `src/application/selectors.ts(18)` есть функция createCurrentIndexSelector, которая должна обрабатывать поток, преобразуя слайды в индексы с помощью `map`. Однако почему-то тут также применен оператор `mergeMapTo()` со значением `EMPTY`. Он явно всё портит... Убираем!
+
+
+### Неправильно заданная высота slide-progress-value
+
+Высота элемента `.slide-progress-value` задаётся в `src/index.css(41)` следующим образом:
+
+```css
+height: 4;
+```
+
+Очевидно, тут незватает единиц измерения `px`. Добавляем:
+
+```css
+height: 4px;
+```
