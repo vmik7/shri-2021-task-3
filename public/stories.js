@@ -299,13 +299,18 @@ window.renderTemplate = function(alias, data) {
             maxValue = Math.max(maxValue, data.values[i].value);
         }
 
+        let futureSprintsIndex = indexR + 1;
+        for (let i = indexR; i >= indexL && data.values[i].value === 0; i--) {
+            futureSprintsIndex = i;
+        }
+
         // Рендерим столбики с нужной высотой
         let readyItemsHtml = ``;
         for (let i = indexL; i <= indexR; i++) {
             readyItemsHtml += `
                 <div class="graph__item${ data.values[i].active ? ' graph__item_active' : '' }">
                     <div class="graph__column">
-                        <div class="graph__value">${ i <= activeIndex ? data.values[i].value : '' }</div>
+                        <div class="graph__value">${ i <= futureSprintsIndex ? data.values[i].value : '' }</div>
                         <div class="graph__bar" style="height: calc(70% * ${ data.values[i].value } / ${ maxValue });"></div>
                     </div>
                     <div class="graph__label">${ data.values[i].title }</div>
