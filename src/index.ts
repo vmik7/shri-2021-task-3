@@ -43,8 +43,8 @@ createCurrentIndexSelector(state$)
         const transitionZero = 'transform 0s linear';
 
         bars[index].style.transition = transitionDefault;
-        if (index + 1 < bars.length) {
-            bars[index + 1].style.transition = transitionZero;
+        for (let i = index + 1; i < bars.length; i++) {
+            bars[i].style.transition = transitionZero;
         }
 
         bars.forEach((el, i) => setScale(el, i < index ? 1 : 0));        
