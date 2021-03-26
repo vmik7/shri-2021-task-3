@@ -26,45 +26,53 @@ window.renderTemplate = function(alias, data) {
         // * Шаблон "лидеры"
 
         // Индекс выбранного пользователя в массиве
-        let selectedUserIndex = -1;
+        let selectedUserIndex;
+
+        // Место, которое занял выбранный пользователь в голосовании
+        let selectedUserPlace;
 
         // Если шаблон leaders используется для отображения результатов голосования, то нужно найти участника, за которого проголосовали
         if (data.selectedUserId) {
 
             // Ищем выбранного пользователя в массиве
-            for (let i = 0; i < data.users.length; i++) {
-                if (data.users[i].id === data.selectedUserId) {
-                    selectedUserIndex = i;
-                    break;
-                }
-            }
+            data.users.some((user, index) => {
+
+                // Записываем данные о текущем пользователе
+                selectedUserIndex = index;
+                selectedUserPlace = index + 1;
+
+                // Если пользователь является выбранным, то перебор прекратиться,
+                // а в selectedUserIndex и selectedUserPlace останутся нужные данные
+                return user.id === data.selectedUserId;
+            });
 
             // Если он стоит слишком далеко, ставим его на 5 место
-            if (selectedUserIndex >= 5) {
+            if (selectedUserPlace > 5) {
                 let tmp = data.users[4];
                 data.users[4] = data.users[selectedUserIndex];
                 data.users[selectedUserIndex] = tmp;
+                selectedUserIndex = 4;
             }
         }
 
         // html для пользователя, за которого проголосовали, но он не в топ 3
         let htmlToBottomPosition = '';
-        if (data.selectedUserId && selectedUserIndex >= 3) {
+        if (data.selectedUserId && selectedUserPlace > 3) {
             htmlToBottomPosition = `
                 <div class="user leaders__user leaders__user_bottom">
                     <div class="user__avatar">
                         <picture>
-                            <img	src="assets/images/1x/${ data.users[4].avatar }"
-                                    srcset="assets/images/2x/${ data.users[4].avatar } 2x"
+                            <img	src="assets/images/1x/${ data.users[selectedUserIndex].avatar }"
+                                    srcset="assets/images/2x/${ data.users[selectedUserIndex].avatar } 2x"
                                     class="user__photo"
                                     alt="avatar">
                         </picture>
                         <div class="user__emoji">👍</div>
                     </div>
-                    <div class="user__name">${ data.users[4].name }</div>
-                    <div class="user__value-text">${ data.users[4].valueText }</div>
+                    <div class="user__name">${ data.users[selectedUserIndex].name }</div>
+                    <div class="user__value-text">${ data.users[selectedUserIndex].valueText }</div>
                 </div>
-                <div class="leaders__place-number leaders__place-number_bottom">${ (data.selectedUserId && selectedUserIndex >= 5 ? selectedUserIndex + 1 : 5) }</div>
+                <div class="leaders__place-number leaders__place-number_bottom">${ selectedUserPlace }</div>
             `;
         }
 
@@ -83,13 +91,13 @@ window.renderTemplate = function(alias, data) {
                                         class="user__photo"
                                         alt="avatar">
                             </picture>
-                            <div class="user__emoji">${ (data.selectedUserId && selectedUserIndex >= 4 ? '👍' : '') }</div>
+                            <div class="user__emoji">${ (selectedUserIndex === 4 ? '👍' : '') }</div>
                         </div>
                         <div class="user__name">${ data.users[4].name }</div>
                         <div class="user__value-text">${ data.users[4].valueText }</div>
                     </div>
                     <div class="leaders__stand">
-                        <div class="leaders__place-number">${ (data.selectedUserId && selectedUserIndex >= 5 ? selectedUserIndex + 1 : 5) }</div>
+                        <div class="leaders__place-number">${ (selectedUserIndex === 4 ? selectedUserPlace : 5) }</div>
                     </div>
                 </div>
                 <div class="leaders__column">
@@ -101,7 +109,7 @@ window.renderTemplate = function(alias, data) {
                                         class="user__photo"
                                         alt="avatar">
                             </picture>
-                            <div class="user__emoji">${ (data.selectedUserId && selectedUserIndex == 2 ? '👍' : '') }</div>
+                            <div class="user__emoji">${ (selectedUserIndex === 2 ? '👍' : '') }</div>
                         </div>
                         <div class="user__name">${ data.users[2].name }</div>
                         <div class="user__value-text">${ data.users[2].valueText }</div>
@@ -138,7 +146,7 @@ window.renderTemplate = function(alias, data) {
                                         class="user__photo"
                                         alt="avatar">
                             </picture>
-                            <div class="user__emoji">${ (data.selectedUserId && selectedUserIndex == 1 ? '👍' : '') }</div>
+                            <div class="user__emoji">${ (selectedUserIndex === 1 ? '👍' : '') }</div>
                         </div>
                         <div class="user__name">${ data.users[1].name }</div>
                         <div class="user__value-text">${ data.users[1].valueText }</div>
@@ -156,7 +164,7 @@ window.renderTemplate = function(alias, data) {
                                         class="user__photo"
                                         alt="avatar">
                             </picture>
-                            <div class="user__emoji">${ (data.selectedUserId && selectedUserIndex == 3 ? '👍' : '') }</div>
+                            <div class="user__emoji">${ (selectedUserIndex === 3 ? '👍' : '') }</div>
                         </div>
                         <div class="user__name">${ data.users[3].name }</div>
                         <div class="user__value-text">${ data.users[3].valueText }</div>
