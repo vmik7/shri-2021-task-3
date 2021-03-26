@@ -299,6 +299,7 @@ window.renderTemplate = function(alias, data) {
             maxValue = Math.max(maxValue, data.values[i].value);
         }
 
+        // Считаем индекс, с которого начинаются нулевые стобцы (спринты)
         let futureSprintsIndex = indexR + 1;
         for (let i = indexR; i >= indexL && data.values[i].value === 0; i--) {
             futureSprintsIndex = i;
