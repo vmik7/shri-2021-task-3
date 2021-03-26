@@ -173,11 +173,15 @@ window.renderTemplate = function(alias, data) {
 
         // * Шаблон "голосование"
 
+        // Достаём offset
+        let currentOffset = data.offset || 0;
+        console.log(currentOffset);
+
         // Рендеринг пользователя, который будет стоять на месте с номером index
         let renderUser = (index) => {
 
             // Сдвигаем индекс на offset, если он задан
-            index += data.offset || 0;
+            index += currentOffset;
 
             // Если на странице есть место, а пользователи закончились - выводим заглушку
             if (index >= data.users.length) {
@@ -226,14 +230,14 @@ window.renderTemplate = function(alias, data) {
                         ${ renderUser(6) }
                     </div>
                     <div class="vote__column">
-                        <button class="vote__arrow" data-action="update" data-params='{ \"alias\": \"vote\", \"data\": { \"offset\": 0 } }' disabled>
+                        <button class="vote__arrow" data-action="update" data-params='{ \"alias\": \"vote\", \"data\": { \"offset\": ${ Math.max(currentOffset - 8, 0)} } }'${ currentOffset ? '' : ' disabled' }>
                             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M32 62C48.5685 62 62 48.5685 62 32C62 15.4315 48.5685 2 32 2C15.4315 2 2 15.4315 2 32C2 48.5685 15.4315 62 32 62ZM32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64ZM59 32C59 46.9117 46.9117 59 32 59C17.0883 59 5 46.9117 5 32C5 17.0883 17.0883 5 32 5C46.9117 5 59 17.0883 59 32ZM25.0607 27.9393C24.4749 27.3536 23.5251 27.3536 22.9393 27.9393C22.3536 28.5251 22.3536 29.4749 22.9393 30.0607L30.9393 38.0607C31.5251 38.6464 32.4749 38.6464 33.0607 38.0607L41.0607 30.0607C41.6464 29.4749 41.6464 28.5251 41.0607 27.9393C40.4749 27.3536 39.5251 27.3536 38.9393 27.9393L32 34.8787L25.0607 27.9393Z" fill="#FCFBF7"/>
                             </svg>
                         </button>
                         ${ renderUser(1) }
                         ${ renderUser(4) }
-                        <button class="vote__arrow" data-action="update" data-params='{ \"alias\": \"vote\", \"data\": { \"offset\": 0 } }'>
+                        <button class="vote__arrow" data-action="update" data-params='{ \"alias\": \"vote\", \"data\": { \"offset\": ${ currentOffset + 8 } } }'${ currentOffset + 8 < data.users.length ? '' : ' disabled' }>
                             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M32 62C48.5685 62 62 48.5685 62 32C62 15.4315 48.5685 2 32 2C15.4315 2 2 15.4315 2 32C2 48.5685 15.4315 62 32 62ZM32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64ZM59 32C59 46.9117 46.9117 59 32 59C17.0883 59 5 46.9117 5 32C5 17.0883 17.0883 5 32 5C46.9117 5 59 17.0883 59 32ZM25.0607 27.9393C24.4749 27.3536 23.5251 27.3536 22.9393 27.9393C22.3536 28.5251 22.3536 29.4749 22.9393 30.0607L30.9393 38.0607C31.5251 38.6464 32.4749 38.6464 33.0607 38.0607L41.0607 30.0607C41.6464 29.4749 41.6464 28.5251 41.0607 27.9393C40.4749 27.3536 39.5251 27.3536 38.9393 27.9393L32 34.8787L25.0607 27.9393Z" fill="#FCFBF7"/>
                             </svg>
@@ -254,12 +258,12 @@ window.renderTemplate = function(alias, data) {
                         ${ renderUser(4) }
                     </div>
                     <div class="vote__column">
-                        <button class="vote__arrow" data-action="update" data-params='{ \"alias\": \"vote\", \"data\": { \"offset\": 0 } }' disabled>
+                        <button class="vote__arrow" data-action="update" data-params='{ \"alias\": \"vote\", \"data\": { \"offset\": ${ Math.max(currentOffset - 6, 0)} } }'${ currentOffset ? '' : ' disabled' }>
                             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(180)">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M32 62C48.5685 62 62 48.5685 62 32C62 15.4315 48.5685 2 32 2C15.4315 2 2 15.4315 2 32C2 48.5685 15.4315 62 32 62ZM32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64ZM59 32C59 46.9117 46.9117 59 32 59C17.0883 59 5 46.9117 5 32C5 17.0883 17.0883 5 32 5C46.9117 5 59 17.0883 59 32ZM25.0607 27.9393C24.4749 27.3536 23.5251 27.3536 22.9393 27.9393C22.3536 28.5251 22.3536 29.4749 22.9393 30.0607L30.9393 38.0607C31.5251 38.6464 32.4749 38.6464 33.0607 38.0607L41.0607 30.0607C41.6464 29.4749 41.6464 28.5251 41.0607 27.9393C40.4749 27.3536 39.5251 27.3536 38.9393 27.9393L32 34.8787L25.0607 27.9393Z" fill="#FCFBF7"/>
                             </svg>
                         </button>
-                        <button class="vote__arrow" data-action="update" data-params='{ \"alias\": \"vote\", \"data\": { \"offset\": 0 } }'>
+                        <button class="vote__arrow" data-action="update" data-params='{ \"alias\": \"vote\", \"data\": { \"offset\": ${ currentOffset + 6 } } }'${ currentOffset + 6 < data.users.length ? '' : ' disabled' }>
                             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M32 62C48.5685 62 62 48.5685 62 32C62 15.4315 48.5685 2 32 2C15.4315 2 2 15.4315 2 32C2 48.5685 15.4315 62 32 62ZM32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64ZM59 32C59 46.9117 46.9117 59 32 59C17.0883 59 5 46.9117 5 32C5 17.0883 17.0883 5 32 5C46.9117 5 59 17.0883 59 32ZM25.0607 27.9393C24.4749 27.3536 23.5251 27.3536 22.9393 27.9393C22.3536 28.5251 22.3536 29.4749 22.9393 30.0607L30.9393 38.0607C31.5251 38.6464 32.4749 38.6464 33.0607 38.0607L41.0607 30.0607C41.6464 29.4749 41.6464 28.5251 41.0607 27.9393C40.4749 27.3536 39.5251 27.3536 38.9393 27.9393L32 34.8787L25.0607 27.9393Z" fill="#FCFBF7"/>
                             </svg>
