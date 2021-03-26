@@ -25,14 +25,15 @@ function receiveMessage({ data }: MessageEvent<XMessage>) {
 }
 
 function onDocumentClick(e: MouseEvent) {
-    if (e.target instanceof HTMLElement) {
+    if (e.target instanceof HTMLElement || e.target instanceof SVGElement) {
         let target = e.target;
-        while(target && !target.dataset.action) {
+        while (target && !target.dataset.action) {
             target = target.parentElement;
         }
-
+        if (target && target.dataset.action) {
             const { action, params } = target.dataset;
             sendMessage(messageAction(action, params));
+        }        
     }
 }
 

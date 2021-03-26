@@ -175,7 +175,6 @@ window.renderTemplate = function(alias, data) {
 
         // Достаём offset
         let currentOffset = data.offset || 0;
-        console.log(currentOffset);
 
         // Рендеринг пользователя, который будет стоять на месте с номером index
         let renderUser = (index) => {
