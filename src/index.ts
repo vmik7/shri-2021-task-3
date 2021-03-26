@@ -38,7 +38,16 @@ createProgressSelector(state$)
 createCurrentIndexSelector(state$)
     .subscribe(index => {
         player.style.transform = `translateX(-${index * 100}%)`;
-        bars.forEach((el, i) => setScale(el, i < index ? 1 : 0));
+
+        const transitionDefault = window.getComputedStyle(bars[0]).transition;
+        const transitionZero = 'transform 0s linear';
+
+        bars[index].style.transition = transitionDefault;
+        if (index + 1 < bars.length) {
+            bars[index + 1].style.transition = transitionZero;
+        }
+
+        bars.forEach((el, i) => setScale(el, i < index ? 1 : 0));        
     });
 
 createCurrentDataSelector(state$)
