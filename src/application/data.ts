@@ -1,7 +1,7 @@
 import produce, { Draft } from 'immer';
 
 import { Action } from './actions';
-import { descriptors, DRAFT_STATE, errors, INTERVAL, State } from './types';
+import { descriptors, DRAFT_STATE, errors, INTERVAL, DELAY, State } from './types';
 
 export function die(error: keyof typeof errors, ...args: any[]): never {
     const e = errors[error];
@@ -35,6 +35,7 @@ export const data = produce((draft: Draft<State>, action: Action) => {
                 draft.progress = 0;
             } else {
                 draft.pause = true;
+                draft.progress = DELAY;
             }
 
             break;
