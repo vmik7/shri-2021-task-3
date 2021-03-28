@@ -10,7 +10,7 @@ const DEFAULT_STATE: State = {
     index: 0,
     progress: 0,
     pause: false,
-    stories: [],
+    stories: []
 };
 
 export function createState(stories: Slide[]): [(a: Action) => void, Observable<State>] {

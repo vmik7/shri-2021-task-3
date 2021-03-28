@@ -84,7 +84,7 @@ export function proxyProperty(
                 assertUnrevoked(state);
                 // @ts-ignore
                 objectTraps.set(state, prop, value);
-            },
+            }
         };
     }
     return desc;

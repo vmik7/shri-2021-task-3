@@ -17,7 +17,7 @@ export function createEffects(
     
     const changeSlideEffect$ = timerEffect$.pipe(
         withLatestFrom(state$),
-        mergeMap(([a, s]) => s.progress >= DELAY ? of(actionNext()) : EMPTY),
+        mergeMap(([a, s]) => s.progress >= DELAY ? of(actionNext()) : EMPTY)
     );
     
     const messageEffect$ = actions$.pipe(
@@ -37,7 +37,7 @@ export function createEffects(
                     return EMPTY;
             }
         })
-    )
+    );
     
     return merge(timerEffect$, changeSlideEffect$, messageEffect$);
 }
